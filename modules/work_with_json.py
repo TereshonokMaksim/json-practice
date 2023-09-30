@@ -1,0 +1,4 @@
+import json, modules.find_path as find_path            
+def create_json(name_json = None, dict1 = {None: None}):                                                                                                                                                                                           
+    with open(find_path.path_finder(f"json\\{name_json}"), "w", encoding = "UTF-8") as json_file:                                                                                                                                                                                            
+        json.dump(dict1, json_file, indent = 4, ensure_ascii = False)
