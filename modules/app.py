@@ -38,16 +38,30 @@ age_entry = ctk.CTkEntry(master = background_image, width = 307,
                         border_width = 5, border_color = "#FCA625",
                         placeholder_text = "Enter your age...", font = entry_font, bg_color = "#1e1e1e")
 
+warning_label_cors = [600, 600]
+
+def warning_label_edit(text = None):
+    global warning_label, warning_label_cors
+    if text != None:
+        print("warn on screen")
+        warning_label = ctk.CTkLabel(master = background, width = 150, height = 25, corner_radius = 10, fg_color = "#363636", text = text, font = ("Inter", 16), bg_color = "#1e1e1e")
+        warning_label_cors = [112, 410]
+        app.after(3000, warning_label_edit)
+    else:
+        warning_label_cors = [600, 600]
+    warning_label.place(x = warning_label_cors[0], y = warning_label_cors[1])
+
 def save_data():
     name, surname, age = name_entry.get(), surname_entry.get(), age_entry.get()
     if name == "" or surname == "" and age == "":
-        print("One or more entry field is blank")
+        warning_label_edit("One or more entry field is blank")
         return
     try:
         age = int(age)
+        warning_label_edit("Save succesful!")
         work_w_json.create_json("New_json_file.json", {"name": name, "surname": surname, "age": age})
     except:
-        print("Age must be a number")
+        warning_label_edit("Age must be a number")
         
 button_save = ctk.CTkButton(master = background, width = 144,
                             height = 47, corner_radius = 15,
@@ -64,8 +78,5 @@ age_entry.place(x = 35, y = 262)
 button_save.place(x = 150, y = 440)
 text_create.place(x = 115,y = 29)
 text_json.place(x = 168, y = 66)
-
-
-
 
 app.mainloop()
